@@ -21,6 +21,8 @@ body {
 }
 
 #screen {
+    background-color: white;
+    color: #000000;
     font-size: 1.2em;
     text-align: right;
     border-radius: 5px;
