@@ -1,36 +1,110 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
 
 body {
-    font-family: 'Roboto', sans-serif; 
+    font-family: 'Roboto', sans-serif;
 }
 
 .flex-container {
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
-    max-width: 300px;
+    max-width: 270px;
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: 5px;
 }
 
 .div-screen {
     display: grid;
     grid-template-columns: 1fr;
     grid-auto-rows: 50px;
+    margin: 5px 5px 5px 5px;
 }
 
 #screen {
+    background-color: white;
+    color: #000000;
+    font-size: 1.2em;
     text-align: right;
+    border-radius: 5px;
+    width: 252px;
+}
+
+.div-buttons {
+    display: flex;
+    width: 260px;
+    margin: 5px 5px 5px 5px;
 }
 
 .div-button-left {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-auto-rows: 50px;
+    grid-column-gap: 0.2em;
+    grid-row-gap: 0.2em;
     width: 100%;
 }
 
 .div-button-right {
     display: grid;
     grid-template-columns: repeat(1, 1fr);
+    grid-template-rows: repeat(3, 50px) 103px;
+    grid-column-gap: 0.2em;
+    grid-row-gap: 0.2em;
+    margin-left: 0.2em;
     width: 50%;
-    grid-template-rows: repeat(3, 50px) 100px;
+}
+
+.color-buttons-left {
+    background-color: #5a5858;
+    border-radius: 5px;
+    color: #ffffff;
+}
+
+.color-buttons-left:active {
+    box-shadow: inset 0 0 8em #ffffff;
+}
+
+.color-buttons-left.symbol {
+    background-color: #008b8b;
+}
+
+.color-buttons-right {
+    background-color: #008b8b;
+    border-radius: 5px;
+    color: #ffffff;
+}
+
+.color-buttons-right:active {
+    box-shadow: inset 0 0 8em #ffffff;
+}
+
+@media (max-width: 992px) {
+    .flex-container {
+        justify-content: center;
+        align-items: center;
+        min-width: 100%;
+    }
+
+    .div-screen {
+        height: 10vh;
+    }
+
+    #screen {
+        font-size: 2.0em;
+        width: 88vw;
+        height: 9vh;
+    }
+
+    .div-buttons {
+        width: 90vw;
+    }
+
+    .div-button-left {
+        grid-template-columns: repeat(3, 1fr);
+        grid-auto-rows: 100px;
+    }
+
+    .div-button-right {
+        grid-template-rows: repeat(3, 1fr) 203px;
+    }
 }
