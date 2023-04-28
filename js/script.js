@@ -66,7 +66,7 @@ class Command {
         this.sum = buttons[18];
 
         this.numbers = [this.seven, this.eight, this.nine, this.four, this.five,
-            this.six, this.one, this.two, this.tree, this.zero];
+        this.six, this.one, this.two, this.tree, this.zero];
     }
 }
 
@@ -74,73 +74,84 @@ const command = new Command(buttons);
 command.numbers.forEach(item => {
     item.addEventListener("click", () => {
         calculatorScreen.value += item.value;
-    })
-})
+    });
+});
 
 command.clear.addEventListener("click", () => {
     calculatorScreen.value = null;
-})
+});
 
 command.sum.addEventListener("click", event => {
-    if(isScreenEmpty()) return;
+    if (isScreenEmpty()) return;
     calculatorScreen.value += Operator.Plus.symbol;
-})
+});
 
 command.subtract.addEventListener("click", () => {
     if (isScreenEmpty()) return;
     calculatorScreen.value += Operator.Minus.symbol;
-})
+});
 
 command.multiple.addEventListener("click", () => {
     if (isScreenEmpty()) return;
     calculatorScreen.value += Operator.Asterisk.symbol;
-})
+});
 
 command.divide.addEventListener("click", () => {
     if (isScreenEmpty()) return;
     calculatorScreen.value += Operator.Divided.symbol;
-})
+});
 
 command.point.addEventListener("click", () => {
     if (isScreenEmpty()) return;
     calculatorScreen.value += Operator.Point.symbol;
-})
-
-command.percentage.addEventListener("click", () => {
-    if (isScreenEmpty()) return;
-    calculatorScreen.value = percentageResult(calculatorScreen.value)
-})
+});
 
 command.result.addEventListener("click", () => {
     if (isScreenEmpty()) return;
-    calculatorScreen.value = calculateResult(calculatorScreen.value)
-})
+    calculatorScreen.value = calculateResult(calculatorScreen.value);
+});
+
+command.percentage.addEventListener("click", () => {
+    if (isScreenEmpty()) return;
+    calculatorScreen.value = percentageResult(calculatorScreen.value);
+});
 
 command.squareRoot.addEventListener("click", () => {
     if (isScreenEmpty()) return;
-    calculatorScreen.value = calculateSquareRoot(calculatorScreen.value)
-})
+    calculatorScreen.value = calculateSquareRoot(calculatorScreen.value);
+});
 
 function isScreenEmpty() {
     return calculatorScreen.value === "" ? true : false;
 }
 
 function calculateResult(values) {
-    const operator = [{ Operator }];
+    if (isMoreThanOneOperator(values))
+        return eval(values.toString());
 
     let result = 0;
-    operator.some(item => {
-        if (values.includes(item.Operator.Plus.symbol))
-            result = sumCalculatorValues(values)
-        else if (values.includes(item.Operator.Minus.symbol))
-            result = subtractValuesFromCalculator(values)
-        else if (values.includes(item.Operator.Asterisk.symbol))
-            result = multiplyCalculatorValues(values)
-        else if (values.includes(item.Operator.Divided.symbol))
-            result = divideCalculatorValues(values)
-    })
+    if (values.includes(Operator.Plus.symbol))
+        result = sumCalculator(values);
+    else if (values.includes(Operator.Minus.symbol))
+        result = subtractCalculator(values);
+    else if (values.includes(Operator.Asterisk.symbol))
+        result = multiplyCalculator(values);
+    else if (values.includes(Operator.Divided.symbol))
+        result = divideCalculator(values);
 
-    return result
+    return result;
+}
+
+function isMoreThanOneOperator(values) {
+    const operator = Object.values(Operator);
+
+    let count = 0;
+    for (let i = 0; i < operator.length; i++) {
+        if (values.includes(operator[i].symbol))
+            count++;
+    }
+
+    return count > 1;
 }
 
 function percentageResult(values) {
@@ -149,17 +160,17 @@ function percentageResult(values) {
     return result;
 }
 
-function sumCalculatorValues(values) {
-    var array = values.split("+")
+function sumCalculator(values) {
+    var array = values.split("+");
     const numberArray = array.map(Number);
-    
+
     return numberArray.reduce((sum, i) => {
         return Calculator.add(sum, i);
     });
 }
 
-function subtractValuesFromCalculator(values) {
-    const array = values.split("-")
+function subtractCalculator(values) {
+    const array = values.split("-");
     const numberArray = array.map(Number);
 
     return numberArray.reduce((sub, i) => {
@@ -167,8 +178,8 @@ function subtractValuesFromCalculator(values) {
     });
 }
 
-function multiplyCalculatorValues(values) {
-    const array = values.split("*")
+function multiplyCalculator(values) {
+    const array = values.split("*");
     const numberArray = array.map(Number);
 
     return numberArray.reduce((mult, i) => {
@@ -176,8 +187,8 @@ function multiplyCalculatorValues(values) {
     });
 }
 
-function divideCalculatorValues(values) {
-    const array = values.split("/")
+function divideCalculator(values) {
+    const array = values.split("/");
     const numberArray = array.map(Number);
 
     return numberArray.reduce((divide, i) => {
